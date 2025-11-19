@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react'
 import { usePathname } from 'next/navigation';
 import { AiOutlineSearch } from "react-icons/ai";
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 const Header = () => {
   const pathname = usePathname();
@@ -16,7 +17,7 @@ const Header = () => {
             <input 
                 type="text" 
                 placeholder='Search articles...' 
-                className='pl-4 pr-12 py-2 w-64 rounded-md border-2 border-gray-200 bg-white/80 backdrop-blur-sm focus:outline-none focus:border-purple-200 focus:ring-1 focus:ring-purple-200 transition-all duration-300 shadow-sm  focus:shadow-md placeholder:text-gray-400 text-gray-700'
+                className='pl-4 pr-12 py-2 w-64 rounded-md border-2 border-gray-200 bg-white/80 backdrop-blur-sm focus:outline-none focus:border-purple-200 focus:ring-1 focus:ring-purple-200 transition-all duration-300 shadow-sm focus:shadow-md placeholder:text-gray-400 text-gray-700'
             />
             <AiOutlineSearch className='absolute right-4 text-gray-400 group-focus-within:text-purple-600 transition-colors duration-300 text-xl' />
         </div>
@@ -36,7 +37,7 @@ const Header = () => {
                 href="/about" 
                 className={`relative px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                     pathname === '/about' 
-                        ?'text-blue-600 bg-gray-100 shadow-md shadow-purple-200'
+                        ? 'text-blue-600 bg-gray-100 shadow-md shadow-purple-200'
                         : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50'
                 }`}
             >
@@ -55,11 +56,22 @@ const Header = () => {
                
             </Link>
         </nav>
-        <div>
+
+
+           <SignedOut>
+            <Link href="/sign-in">
+            {/* <SignInButton> */}
             <button className='px-6 py-2 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-semibold rounded-lg shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/60 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 active:scale-95 transition-all duration-300'>
                 Sign In
             </button>
-        </div>
+            {/* </SignInButton> */}
+            </Link>
+        </SignedOut>
+        <SignedIn>
+            <div className='cursor-pointer hover:bg-gray-100 rounded-full p-2 transition-all duration-300 transform scale-150'>
+                <UserButton />
+            </div>
+        </SignedIn>
    </header>
   )
 }
