@@ -13,15 +13,15 @@ export async function POST(req) {
     console.log('Webhook payload:', evt.data)
 
     if (evt.type === 'user.created') {
-        console.log('userId:', evt.data.id)
+        console.log('User created:', evt.data.id)
     }
 
     if (evt.type === 'user.updated') {
-        console.log('userId:', evt.data.id)
+        console.log('User updated:', evt.data.id)
     }
 
     if (evt.type === 'user.deleted') {
-        console.log('userId:', evt.data.id)
+        console.log('User deleted:', evt.data.id)
     }
 
     return new Response('Webhook received', { status: 200 })
