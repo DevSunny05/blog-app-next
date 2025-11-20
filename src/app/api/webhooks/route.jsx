@@ -47,6 +47,7 @@ export async function POST(req) {
     if(eventType==='user.deleted'){
       try {
         await deleteUser(id)
+        console.log("User delete successfully")
       } catch (error) {
         console.log("Error deleting user",error)
     return new Response("Error deleting user", { status: 400 })

@@ -11,6 +11,7 @@ export const createOrUpdateUser=async(id,first_name,last_name,image_url,email_ad
             {clerkId:id},
             {
                 $set:{
+                    clerkId:id,
                     firstName:first_name,
                     lastName:last_name,
                     profilePicture:image_url,
@@ -34,7 +35,11 @@ export const createOrUpdateUser=async(id,first_name,last_name,image_url,email_ad
 export const deleteUser=async(id)=>{
     try {
         await connect()
-        await userModel.findOneAndDelete({clerkId:id})
+        const deletedUser=await userModel.findOneAndDelete({clerkId:id})
+        if(!deletedUser){
+            console.log("No user found to delete for clerkId:",id)
+        }
+        console.log("User deleted successfully")
     } catch (error) {
         console.log("Error deleting user",error)
     }
