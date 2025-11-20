@@ -2,12 +2,23 @@
 
 import { useUser } from "@clerk/nextjs"
 import dynamic from "next/dynamic"
+import { useState } from "react";
 const ReactQuill=dynamic(()=>import("react-quill-new"),{ssr:false})
 import 'react-quill-new/dist/quill.snow.css';
 
 
 const page = () => {
     const{isSignedIn,user,isLoaded}=useUser()
+
+    const[file,setFile]=useState(null)
+    const[imageUploadProgress,setImageUploadProgress]=useState(null)
+    const[imageUploadError,setImageUploadError]=useState(null)
+    const[formData,setFormData]=useState({})
+
+    const handleImageUpload=()=>{
+        
+    }
+
 
     if(!isLoaded){
         return null
@@ -50,8 +61,13 @@ const page = () => {
                     <div className="flex flex-col gap-2">
                         <span className="text-sm font-medium text-slate-600">Cover Image</span>
                         <div className="flex justify-between gap-4 flex-col sm:flex-row items-start sm:items-center border-2 border-dashed border-amber-300 rounded-xl p-4 bg-amber-50/40">
-                            <input type="file" accept="image/*" className="text-sm text-slate-600"/>
-                            <button type="button" className="px-4 py-2 rounded-md border border-amber-400 text-amber-600 hover:bg-amber-100 transition-colors text-sm">
+                            <input type="file" accept="image/*"
+                             className="text-sm text-slate-600"
+                              onChange={(e)=>setFile(e.target.files[0])}/>
+                            <button type="button" 
+                            onClick={handleImageUpload}
+                            disabled={imageUploadProgress}
+                            className="px-4 py-2 rounded-md border border-amber-400 text-amber-600 hover:bg-amber-100 transition-colors text-sm">
                                 Upload Image
                             </button>
                         </div>
