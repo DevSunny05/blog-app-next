@@ -15,7 +15,7 @@ export const createOrUpdateUser=async(id,first_name,last_name,image_url,email_ad
                     lastName:last_name,
                     profilePicture:image_url,
                     email:email_addresses[0].email_address,
-                    username
+                    userName:username
                 }
             },{
                 new:true,
@@ -28,4 +28,14 @@ export const createOrUpdateUser=async(id,first_name,last_name,image_url,email_ad
         console.log("Error creating and updating user",error)
     }
 
+}
+
+
+export const deleteUser=async(id)=>{
+    try {
+        await connect()
+        await userModel.findOneAndDelete({clerkId:id})
+    } catch (error) {
+        console.log("Error deleting user",error)
+    }
 }
