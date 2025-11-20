@@ -1,9 +1,11 @@
 
+'use server'
+
 import userModel from "../models/userModel"
 import { connect } from "../mongoDB/config"
 
 
-export const createOrUpdateUser=async(id,first_name,last_name,image_url,email_addresses,username)=>{
+export async function createOrUpdateUser(id,first_name,last_name,image_url,email_addresses,username){
     try {
         await connect()
 
@@ -20,27 +22,32 @@ export const createOrUpdateUser=async(id,first_name,last_name,image_url,email_ad
                 }
             },{
                 new:true,
-                upsert:true
+                upsert:true,
+                setDefaultsOnInsert:true
             }
         )
+        console.log("User upserted/updated successfully",user?._id?.toString())
         return user
 
     } catch (error) {
         console.log("Error creating and updating user",error)
+        throw error
     }
 
 }
 
 
-export const deleteUser=async(id)=>{
+export async function deleteUser(id){
     try {
         await connect()
         const deletedUser=await userModel.findOneAndDelete({clerkId:id})
         if(!deletedUser){
             console.log("No user found to delete for clerkId:",id)
+            return
         }
         console.log("User deleted successfully")
     } catch (error) {
         console.log("Error deleting user",error)
+        throw error
     }
 }
