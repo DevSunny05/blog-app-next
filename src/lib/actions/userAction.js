@@ -1,53 +1,48 @@
-
-'use server'
-
-import userModel from "../models/userModel"
-import { connect } from "../mongoDB/config"
+import userModel from "../models/userModel";
+import { connect } from "../mongoDB/config";
 
 
-export async function createOrUpdateUser(id,first_name,last_name,image_url,email_addresses,username){
-    try {
-        await connect()
+export const createorUpdateUser = async (
+  id,
+  first_name,
+  last_name,
+  image_url,
+  email_addresses,
+  username
+) => {
+  try {
+    await connect();
 
-        const user=await userModel.findOneAndUpdate(
-            {clerkId:id},
-            {
-                $set:{
-                    clerkId:id,
-                    firstName:first_name,
-                    lastName:last_name,
-                    profilePicture:image_url,
-                    email:email_addresses[0].email_address,
-                    userName:username
-                }
-            },{
-                new:true,
-                upsert:true,
-                setDefaultsOnInsert:true
-            }
-        )
-        console.log("User upserted/updated successfully",user?._id?.toString())
-        return user
+    const user = await userModel.findOneAndUpdate(
+      {
+        clerkId: id,
+      },
+      {
+        $set: {
+          firstName: first_name,
+          lastName: last_name,
+          profilePicture: image_url,
+          email: email_addresses[0].email_address,
+          userName:username
+        },
+      },
+      {
+        upsert: true,
+        new: true,
+      }
+    );
+    return user;
+  } catch (error) {
+    console.log("Error:could not create or update user", error);
+  }
+};
 
-    } catch (error) {
-        console.log("Error creating and updating user",error)
-        throw error
-    }
-
-}
-
-
-export async function deleteUser(id){
-    try {
-        await connect()
-        const deletedUser=await userModel.findOneAndDelete({clerkId:id})
-        if(!deletedUser){
-            console.log("No user found to delete for clerkId:",id)
-            return
-        }
-        console.log("User deleted successfully")
-    } catch (error) {
-        console.log("Error deleting user",error)
-        throw error
-    }
-}
+export const deleteUser = async (id) => {
+  try {
+    await connect();
+    await userModel.findOneAndDelete({ clerkId: id });
+    console.log("User deleted successfully");
+  } catch (error) {
+    console.log(error);
+  }
+};
