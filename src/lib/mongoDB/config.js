@@ -14,8 +14,10 @@ export const connect=async()=>{
             dbName:'blog-app'
         })
         initialized=true
+        console.log("✅ MongoDB connected");
     } catch (error) {
-        console.log("Error connecting to DB",error)
+        console.error("❌ MongoDB connection error:", error);
+    throw new Error("MongoDB connection failed");
     }
 }
 

@@ -1,7 +1,11 @@
 import { createOrUpdateUser, deleteUser } from '@/lib/actions/userAction'
-import { clerkClient } from '@clerk/nextjs/server'
+import { createClerkClient } from "@clerk/backend";
 import { verifyWebhook } from '@clerk/nextjs/webhooks'
 import { NextRequest } from 'next/server'
+
+const clerkClient = createClerkClient({
+  secretKey: process.env.CLERK_SECRET_KEY,
+});
 
 export async function POST(req) {
   try {
@@ -41,7 +45,6 @@ export async function POST(req) {
     }
 
     if(eventType==='user.deleted'){
-      const {id}=evt?.data
       try {
         await deleteUser(id)
       } catch (error) {
