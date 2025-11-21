@@ -17,7 +17,7 @@ const page = () => {
   const [formData, setFormData] = useState({});
   const [publishError,setPublishError]=useState(null)
   const router=useRouter()
-  console.log(formData)
+ 
 
 //   Handle iamge uoload
   const handleImageUpload = async () => {
@@ -72,7 +72,14 @@ const page = () => {
   const handleSubmit=async(e)=>{
     e.preventDefault();
 
+    // Validate form data
+    if (!formData.title || !formData.content || !formData.imageUrls) {
+      setPublishError("Please fill in all required fields: Title, Content, and Cover Image")
+      return
+    }
+
     try {
+        setPublishError(null)
         const res=await fetch('/api/post/create',{
             method:"POST",
             headers:{
@@ -87,16 +94,17 @@ const page = () => {
         const data=await res.json()
 
         if(!res.ok){
-            setPublishError(data.message)
+            setPublishError(data.error || data.message || "Failed to create post")
             return
         }
 
-        if(res.ok){
+        if(res.ok && data.slug){
             setPublishError(null)
             router.push(`/post/${data.slug}`)
         }
     } catch (error) {
-        setPublishError("Something went wrong")
+        console.error("Error submitting post:", error)
+        setPublishError("Something went wrong. Please try again.")
     }
 
   }
@@ -217,6 +225,11 @@ const page = () => {
               setFormData({ ...formData, content: value });
             }}
           />
+          {publishError && (
+            <p className="text-sm text-red-500 bg-red-50 p-3 rounded-lg border border-red-200">
+              {publishError}
+            </p>
+          )}
           <button className="p-3 w-full rounded-xl bg-amber-300 text-slate-900 font-semibold hover:bg-amber-400 transition-colors">
             Submit
           </button>
