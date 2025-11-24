@@ -24,7 +24,7 @@ export default async function Home() {
     const data = await result.json();
     posts = data.posts;
   } catch (error) {
-    console.Console.log("Error getting post", error);
+    console.log("Error getting post", error)
   }
   return (
     <div className="flex flex-col justify-center items-center">
