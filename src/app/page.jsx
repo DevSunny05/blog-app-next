@@ -1,6 +1,7 @@
 import CallToAction from "@/components/CallToAction";
 import RecentPost from "@/components/RecentPost";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Home() {
   let posts = null;
