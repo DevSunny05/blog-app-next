@@ -1,4 +1,5 @@
 import CallToAction from "@/components/CallToAction";
+import RecentPost from "@/components/RecentPost";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -77,8 +78,11 @@ const page = async ({ params }) => {
       ></div>
 
       <div className="max-w-4xl mx-auto w-full">
-        <CallToAction post={post}  />
+        <CallToAction   />
       </div>
+
+      <RecentPost limit={3}/>
+
     </main>
   );
 };
