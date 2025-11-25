@@ -25,14 +25,21 @@ const RecentPost = async ({limit}) => {
   } catch (error) {
     console.log("Error geting posts",error)
   }
-  return(
-    <div className="flex flex-col justify-center items-center mb-5">
-        <h1 className="text-xl mt-5">Recent articles</h1>
-        <div className="flex flex-wrap gap-5 mt-5 justify-center">
-            {posts && posts.map((post)=><PostCard key={post._id} post={post}/>)}
-        </div>
+  return posts && posts.length > 0 ? (
+    <div className="w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+        {posts.map((post) => (
+          <PostCard key={post._id} post={post} />
+        ))}
+      </div>
     </div>
-  )
+  ) : (
+    <div className="text-center py-12">
+      <p className="text-gray-500 text-lg">
+        No posts available yet. Check back soon!
+      </p>
+    </div>
+  );
 };
 
 export default RecentPost;
