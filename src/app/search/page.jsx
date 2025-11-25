@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { set } from "mongoose";
 import PostCard from "@/components/PostCard";
 
 const page = () => {
@@ -36,7 +35,7 @@ const page = () => {
     }
 
     const fetchPosts = async () => {
-      setLoading = true;
+      setLoading(true)
       const searchQuery = urlParams.toString();
       const res = await fetch("/api/post/get", {
         method: "POST",
@@ -149,7 +148,7 @@ const page = () => {
             </label>
             <textarea
               placeholder="saerch..."
-              id="searchterm"
+              id="searchTerm"
               type="text"
               value={sidebarData.searchTerm}
               onChange={handleChange}
@@ -160,7 +159,7 @@ const page = () => {
             <label htmlFor="" className="font-semibold">
               Sort:
             </label>
-            <select id="sort">
+            <select id="sort" onChange={handleChange}>
               <option value="desc">Latest</option>
               <option value="asc"> Oldest</option>
             </select>
@@ -170,7 +169,7 @@ const page = () => {
             <label htmlFor="" className="font-semibold">
               Category:
             </label>
-            <select id="sort">
+            <select id="category" onChange={handleChange}>
               <option value="uncategorized">Uncategorized</option>
               <option value="reactjs"> React.JS</option>
               <option value="nextjs">Nextjs</option>
@@ -192,7 +191,7 @@ const page = () => {
             <p className="text-xl text-gray-500">No posts found</p>
           )}
 
-          {loading && <p className="text-xl text-gray-500">Loading</p>}
+          {loading && <p className="text-xl text-gray-500">Loading...</p>}
 
           {!loading &&
             posts &&
