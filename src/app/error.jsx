@@ -10,7 +10,7 @@ export default function GlobalError({ error, reset }) {
               Something went wrong
             </p>
             <h1 className="text-3xl font-bold text-gray-900">
-              Unable to load this page
+              Failed to load this page
             </h1>
             <p className="text-gray-600">
               {error?.message ||
