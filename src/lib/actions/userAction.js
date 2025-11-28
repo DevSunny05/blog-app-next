@@ -1,7 +1,6 @@
 import userModel from "../models/userModel";
 import { connect } from "../mongoDB/config";
 
-
 export const createorUpdateUser = async (
   id,
   first_name,
@@ -23,7 +22,7 @@ export const createorUpdateUser = async (
           lastName: last_name,
           profilePicture: image_url,
           email: email_addresses[0].email_address,
-          userName:username
+          userName: username,
         },
       },
       {
@@ -46,3 +45,5 @@ export const deleteUser = async (id) => {
     console.log(error);
   }
 };
+
+// // export const getUserById = async (id) => {
